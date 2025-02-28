@@ -5,6 +5,10 @@ async function getAllUsers() {
   const users = await prisma.user.findMany();
   return users;
 }
+async function getUserById(id) {
+  const user = await prisma.user.findUnique({ where: id });
+  return user;
+}
 async function addUser(data) {
   await prisma.user.create({
     data,
@@ -121,6 +125,7 @@ async function deleteComment(postId, commentId) {
 
 module.exports = {
   getAllUsers,
+  getUserById,
   addUser,
   getAllPosts,
   getPostById,

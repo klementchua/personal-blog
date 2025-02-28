@@ -8,6 +8,10 @@ async function getAllUsers(req, res) {
   const users = await db.getAllUsers();
   res.json(users);
 }
+async function getUser(req, res) {
+  const user = await db.getUserById(parseInt(req.params.id));
+  res.json(user);
+}
 async function addUser(req, res) {
   const { username, email, password } = req.body;
   const hashedpw = await bcrypt.hash(password, 10);
@@ -88,6 +92,7 @@ async function deleteComment(req, res) {
 
 module.exports = {
   getAllUsers,
+  getUser,
   addUser,
   getAllPosts,
   getPost,
