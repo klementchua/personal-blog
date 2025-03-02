@@ -29,7 +29,7 @@ function PostContainer() {
   ) : (
     posts.map((post) => {
       return (
-        <Link to={`posts/${post.id}`}>
+        <Link key={post.id} to={`posts/${post.id}`}>
           <h2>{post.title}</h2>
         </Link>
       );

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import CommentsContainer from './CommentsContainer';
 
 export type PostType = {
   id: number;
@@ -45,12 +46,16 @@ function Post() {
     <div>Loading...</div>
   ) : (
     <div className="blog-post">
-      <h1>{post?.title}</h1>
-      <p>
-        Published on {datePublished}, last updated on {dateUpdated}
-      </p>
-      <hr />
-      <p>{post?.content}</p>
+      <div className="post-container">
+        <h1>{post?.title}</h1>
+        <p>
+          Published on {datePublished}, last updated on {dateUpdated}
+        </p>
+        <hr />
+        <p>{post?.content}</p>
+        <hr />
+      </div>
+      <CommentsContainer />
     </div>
   );
 }
