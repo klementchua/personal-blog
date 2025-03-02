@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import CommentsContainer from './CommentsContainer';
 import { AuthContext } from '../hooks/AuthProvider';
 import { Link } from 'react-router-dom';
+import Header from './Header';
 
 export type PostType = {
   id: number;
@@ -58,18 +59,21 @@ function Post() {
   return isLoading ? (
     <div>Loading...</div>
   ) : (
-    <div className="blog-post">
-      <div className="post-container">
-        <h1>{post?.title}</h1>
-        <p>
-          Published on {datePublished}, last updated on {dateUpdated}
-        </p>
-        <hr />
-        <p>{post?.content}</p>
-        <hr />
+    <>
+      <Header />
+      <div className="blog-post">
+        <div className="post-container">
+          <h1>{post?.title}</h1>
+          <p>
+            Published on {datePublished}, last updated on {dateUpdated}
+          </p>
+          <hr />
+          <p>{post?.content}</p>
+          <hr />
+        </div>
+        <CommentsContainer />
       </div>
-      <CommentsContainer />
-    </div>
+    </>
   );
 }
 
