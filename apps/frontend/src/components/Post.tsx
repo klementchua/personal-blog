@@ -1,6 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import CommentsContainer from './CommentsContainer';
+import { AuthContext } from '../hooks/AuthProvider';
+import { Link } from 'react-router-dom';
 
 export type PostType = {
   id: number;
@@ -16,12 +18,13 @@ function Post() {
   const [post, setPost] = useState<PostType>();
   const [isLoading, setIsLoading] = useState(true);
   const { postId } = useParams() as { postId: string };
+  const { isAuthenticated } = useContext(AuthContext);
 
   useEffect(() => {
     async function getPost(postId: number) {
       try {
         const json = await fetch(
-          `${import.meta.env.VITE_API_HOST}/blogapi/v1/posts/${postId}`,
+          `${import.meta.env.VITE_API_HOST}/posts/${postId}`,
           {
             mode: 'cors',
           }
@@ -41,6 +44,16 @@ function Post() {
   const dateUpdated = post?.dateUpdated
     ? post.dateUpdated.slice(0, 10).split('-').reverse().join('/')
     : 'unpublished';
+
+  if (!isAuthenticated) {
+    return (
+      <div>
+        You are not allowed to access this page.
+        <br />
+        <Link to="/">Home</Link>
+      </div>
+    );
+  }
 
   return isLoading ? (
     <div>Loading...</div>

@@ -12,9 +12,7 @@ function CommentsContainer() {
     async function getComments(postId: number) {
       try {
         const json = await fetch(
-          `${
-            import.meta.env.VITE_API_HOST
-          }/blogapi/v1/posts/${postId}/comments`,
+          `${import.meta.env.VITE_API_HOST}/posts/${postId}/comments`,
           {
             mode: 'cors',
           }

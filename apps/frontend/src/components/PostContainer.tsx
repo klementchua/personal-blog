@@ -9,12 +9,9 @@ function PostContainer() {
   useEffect(() => {
     async function getPosts() {
       try {
-        const json = await fetch(
-          `${import.meta.env.VITE_API_HOST}/blogapi/v1/posts`,
-          {
-            mode: 'cors',
-          }
-        ).then((response) => response.json());
+        const json = await fetch(`${import.meta.env.VITE_API_HOST}/posts`, {
+          mode: 'cors',
+        }).then((response) => response.json());
         setPosts(json);
         setIsLoading(false);
       } catch (err) {
