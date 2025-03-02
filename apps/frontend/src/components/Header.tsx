@@ -1,13 +1,16 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../hooks/AuthProvider';
+import { useNavigate } from 'react-router-dom';
 
 function Header() {
   const { isAuthenticated, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   function clickHandler() {
     try {
       logout();
+      navigate('/');
     } catch (err) {
       console.error(err);
     }
@@ -21,7 +24,7 @@ function Header() {
       {!isAuthenticated ? (
         <>
           <button>
-            <Link to="/">Sign up</Link>
+            <Link to="/signup">Sign up</Link>
           </button>
           <button>
             <Link to="/login">Log in</Link>

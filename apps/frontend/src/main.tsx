@@ -6,6 +6,7 @@ import './index.css';
 import App from './App.tsx';
 import Post from './components/Post.tsx';
 import LoginForm from './components/LoginForm.tsx';
+import SignUpForm from './components/SignUpFOrm.tsx';
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
   {
     path: '/posts/:postId',
     element: <Post />,
+  },
+  {
+    path: '/signup',
+    element: <SignUpForm />,
   },
   {
     path: '/login',
