@@ -1,12 +1,12 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { AuthProvider } from './hooks/AuthProvider.tsx';
+import { AuthProvider } from './context/AuthProvider.tsx';
 import './index.css';
 import App from './App.tsx';
 import Post from './components/Post.tsx';
 import LoginForm from './components/LoginForm.tsx';
-import SignUpForm from './components/SignUpFOrm.tsx';
+import SignUpForm from './components/SignUpForm.tsx';
 
 const router = createBrowserRouter([
   {

@@ -1,7 +1,14 @@
-import { createContext, useState } from 'react';
+import { createContext, useState, useContext } from 'react';
+
+type User = {
+  id: number;
+  username: string;
+  email: string;
+};
 
 type ContextValue = {
   token: string | null;
+  user: User | null;
   isAuthenticated: boolean;
   login: (credentials: {
     username: string;
@@ -10,11 +17,25 @@ type ContextValue = {
   logout: () => void;
 };
 
-export const AuthContext = createContext<ContextValue>(null);
+const AuthContext = createContext<ContextValue>({
+  token: null,
+  user: null,
+  isAuthenticated: false,
+  login: async () => false,
+  logout: () => {},
+});
+
+export const useAuth = () => {
+  return useContext(AuthContext);
+};
 
 export function AuthProvider({ children }) {
   const [token, setToken] = useState(localStorage.getItem('token'));
   const [isAuthenticated, setIsAuthenticated] = useState(!!token);
+  const [user, setUser] = useState(() => {
+    const savedUser = localStorage.getItem('user');
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
 
   async function login(credentials: { username: string; password: string }) {
     try {
@@ -29,6 +50,8 @@ export function AuthProvider({ children }) {
       if (data.token) {
         localStorage.setItem('token', data.token);
         setToken(data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
+        setUser(data.user);
         setIsAuthenticated(true);
         return true;
       }
@@ -42,10 +65,12 @@ export function AuthProvider({ children }) {
   function logout() {
     localStorage.removeItem('token');
     setToken(null);
+    localStorage.removeItem('user');
+    setUser(null);
     setIsAuthenticated(false);
   }
 
-  const authContextValue = { token, isAuthenticated, login, logout };
+  const authContextValue = { token, isAuthenticated, user, login, logout };
 
   return (
     <AuthContext.Provider value={authContextValue}>

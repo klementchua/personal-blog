@@ -1,7 +1,7 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import CommentsContainer from './CommentsContainer';
-import { AuthContext } from '../hooks/AuthProvider';
+import { useAuth } from '../context/AuthProvider';
 import { Link } from 'react-router-dom';
 import Header from './Header';
 
@@ -19,7 +19,7 @@ function Post() {
   const [post, setPost] = useState<PostType>();
   const [isLoading, setIsLoading] = useState(true);
   const { postId } = useParams() as { postId: string };
-  const { isAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated } = useAuth();
 
   useEffect(() => {
     async function getPost(postId: number) {

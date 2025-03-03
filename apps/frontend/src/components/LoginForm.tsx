@@ -1,13 +1,13 @@
-import { SyntheticEvent, useState, useContext } from 'react';
+import { SyntheticEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../hooks/AuthProvider';
+import { useAuth } from '../context/AuthProvider';
 import Header from './Header';
 
 function LoginForm() {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [error, setError] = useState('');
-  const { login } = useContext(AuthContext);
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   async function submitHandler(e: SyntheticEvent) {

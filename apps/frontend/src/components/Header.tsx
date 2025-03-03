@@ -1,10 +1,9 @@
-import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { AuthContext } from '../hooks/AuthProvider';
+import { useAuth } from '../context/AuthProvider';
 import { useNavigate } from 'react-router-dom';
 
 function Header() {
-  const { isAuthenticated, logout } = useContext(AuthContext);
+  const { isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
 
   function clickHandler() {

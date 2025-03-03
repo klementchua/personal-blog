@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { CommentType } from './Comment';
 import { useParams } from 'react-router-dom';
 import Comment from './Comment';
+import NewComment from './NewComment';
 
 function CommentsContainer() {
   const [comments, setComments] = useState<CommentType[]>([]);
@@ -28,6 +29,7 @@ function CommentsContainer() {
 
   return (
     <div className="comments-container">
+      <NewComment />
       {commentsIsLoading ? (
         <div>Loading comments...</div>
       ) : (
