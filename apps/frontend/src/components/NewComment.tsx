@@ -1,16 +1,34 @@
 import { SyntheticEvent, useState } from 'react';
 import { useAuth } from '../context/AuthProvider';
+import { useParams } from 'react-router-dom';
 
-function NewComment() {
+type CommentProps = {
+  setRerender: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+function NewComment({ setRerender }: CommentProps) {
   const [comment, setComment] = useState('');
-  const { user, isAuthenticated } = useAuth();
+  const { token, user, isAuthenticated } = useAuth();
+  const { postId } = useParams();
 
-  function submitHandler(e: SyntheticEvent) {
+  async function submitHandler(e: SyntheticEvent) {
     e.preventDefault();
+    await fetch(`${import.meta.env.VITE_API_HOST}/posts/${postId}/comments`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        content: comment,
+        userId: user?.id,
+      }),
+    });
+    setComment('');
+    setRerender((prev) => !prev);
   }
 
   if (!isAuthenticated) return <div>You must be logged in to comment.</div>;
-  console.log(user);
 
   return (
     <div>
@@ -23,8 +41,8 @@ function NewComment() {
             value={comment}
             onChange={(e) => setComment(e.target.value)}
           ></textarea>
+          <button type="submit">Submit</button>
         </div>
-        <button type="submit">Submit</button>
       </form>
     </div>
   );

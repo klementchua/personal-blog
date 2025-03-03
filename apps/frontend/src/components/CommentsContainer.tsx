@@ -7,6 +7,7 @@ import NewComment from './NewComment';
 function CommentsContainer() {
   const [comments, setComments] = useState<CommentType[]>([]);
   const [commentsIsLoading, setCommentsIsLoading] = useState(true);
+  const [rerender, setRerender] = useState(false);
   const { postId } = useParams() as { postId: string };
 
   useEffect(() => {
@@ -25,11 +26,11 @@ function CommentsContainer() {
       }
     }
     getComments(parseInt(postId));
-  }, [postId]);
+  }, [postId, rerender]);
 
   return (
     <div className="comments-container">
-      <NewComment />
+      <NewComment setRerender={setRerender} />
       {commentsIsLoading ? (
         <div>Loading comments...</div>
       ) : (
