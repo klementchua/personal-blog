@@ -4,7 +4,9 @@ const bcrypt = require('bcrypt');
 const prisma = require('../config/prisma');
 
 function generateToken(user) {
-  return jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+  return jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+    expiresIn: '1h',
+  });
 }
 
 async function login(req, res) {
@@ -21,6 +23,7 @@ async function login(req, res) {
       id: user.id,
       username: user.username,
       email: user.email,
+      role: user.role,
     },
   });
 }

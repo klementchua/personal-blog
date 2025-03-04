@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import CommentsContainer from './CommentsContainer';
 import { useAuth } from '../hooks/AuthProvider';
 import { Link } from 'react-router-dom';
 import Header from './Header';
@@ -71,7 +70,6 @@ function Post() {
           <p>{post?.content}</p>
           <hr />
         </div>
-        <CommentsContainer />
       </div>
     </>
   );

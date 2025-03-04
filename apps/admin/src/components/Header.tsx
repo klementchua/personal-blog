@@ -21,14 +21,9 @@ function Header() {
         <Link to="/">Home</Link>
       </button>
       {!isAuthenticated ? (
-        <>
-          <button>
-            <Link to="/signup">Sign up</Link>
-          </button>
-          <button>
-            <Link to="/login">Log in</Link>
-          </button>
-        </>
+        <button>
+          <Link to="/login">Log in</Link>
+        </button>
       ) : (
         <button onClick={clickHandler}>Log Out</button>
       )}
