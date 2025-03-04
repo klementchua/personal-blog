@@ -89,6 +89,9 @@ async function getAllComments(postId) {
         },
       },
     },
+    orderBy: {
+      dateTimePublished: 'desc',
+    },
   });
   return comments;
 }
