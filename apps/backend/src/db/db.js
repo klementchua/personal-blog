@@ -6,7 +6,7 @@ async function getAllUsers() {
   return users;
 }
 async function getUserById(id) {
-  const user = await prisma.user.findUnique({ where: id });
+  const user = await prisma.user.findUnique({ where: { id } });
   return user;
 }
 async function addUser(data) {
@@ -81,6 +81,13 @@ async function getAllComments(postId) {
   const comments = await prisma.comment.findMany({
     where: {
       postId,
+    },
+    include: {
+      user: {
+        select: {
+          username: true,
+        },
+      },
     },
   });
   return comments;

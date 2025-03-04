@@ -8,14 +8,21 @@ function generateToken(user) {
 }
 
 async function login(req, res) {
-  const { email, password } = req.body;
-  const user = await prisma.user.findUnique({ where: email });
-  if (!user) return res.status(401).json({ message: 'Invalid email' });
+  const { username, password } = req.body;
+  const user = await prisma.user.findUnique({ where: { username } });
+  if (!user) return res.status(401).json({ message: 'Invalid username' });
   const match = await bcrypt.compare(password, user.password);
   if (!match) return res.status(401).json({ message: 'Invalid password' });
 
   const token = generateToken(user);
-  res.json({ token });
+  res.json({
+    token,
+    user: {
+      id: user.id,
+      username: user.username,
+      email: user.email,
+    },
+  });
 }
 
 async function isAdmin(req, res, next) {
@@ -29,20 +36,17 @@ async function canEditComment(req, res, next) {
   try {
     const comment = await prisma.comment.findUnique({
       where: {
-        id: req.params.commentId,
-        postId: req.params.postId,
+        id: parseInt(req.params.commentId),
+        postId: parseInt(req.params.postId),
       },
     });
     if (!comment) {
       return res.status(404).json({ message: 'Comment not found.' });
     }
-    if (
-      comment.userId.toString() === req.user.id ||
-      req.user.role === 'ADMIN'
-    ) {
+    if (comment.userId === req.user.id || req.user.role === 'ADMIN') {
       return next();
     }
-    return res.status(403).json({ message: 'Access denied,' });
+    return res.status(403).json({ message: 'Access denied.' });
   } catch (err) {
     res.status(500).json({ message: 'Server error' });
   }

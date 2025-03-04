@@ -35,7 +35,13 @@ function CommentsContainer() {
         <div>Loading comments...</div>
       ) : (
         comments.map((comment) => {
-          return <Comment comment={comment} key={comment.id} />;
+          return (
+            <Comment
+              comment={comment}
+              setRerender={setRerender}
+              key={comment.id}
+            />
+          );
         })
       )}
     </div>

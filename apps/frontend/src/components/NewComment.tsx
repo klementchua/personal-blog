@@ -2,11 +2,11 @@ import { SyntheticEvent, useState } from 'react';
 import { useAuth } from '../context/AuthProvider';
 import { useNavigate, useParams } from 'react-router-dom';
 
-type CommentProps = {
+type NewCommentProps = {
   setRerender: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-function NewComment({ setRerender }: CommentProps) {
+function NewComment({ setRerender }: NewCommentProps) {
   const [comment, setComment] = useState('');
   const { token, user, isAuthenticated, checkTokenExpiry } = useAuth();
   const { postId } = useParams();
@@ -15,9 +15,8 @@ function NewComment({ setRerender }: CommentProps) {
   async function submitHandler(e: SyntheticEvent) {
     e.preventDefault();
     const tokenExpired = checkTokenExpiry();
-    if (tokenExpired) {
-      return navigate('/');
-    }
+    if (tokenExpired) return navigate('/');
+
     await fetch(`${import.meta.env.VITE_API_HOST}/posts/${postId}/comments`, {
       method: 'POST',
       headers: {
