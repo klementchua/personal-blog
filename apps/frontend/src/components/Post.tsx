@@ -17,6 +17,7 @@ export type PostType = {
 
 function Post() {
   const [post, setPost] = useState<PostType>();
+  const [postContent, setPostContent] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const { postId } = useParams() as { postId: string };
   const { isAuthenticated } = useAuth();
@@ -31,6 +32,7 @@ function Post() {
           }
         ).then((response) => response.json());
         setPost(json);
+        setPostContent(json.content);
         setIsLoading(false);
       } catch (err) {
         console.log(err);
@@ -68,7 +70,7 @@ function Post() {
             Published on {datePublished}, last updated on {dateUpdated}
           </p>
           <hr />
-          <p>{post?.content}</p>
+          <div dangerouslySetInnerHTML={{ __html: postContent }}></div>
           <hr />
         </div>
         <CommentsContainer />

@@ -63,6 +63,7 @@ function Comment({ comment, setRerender }: CommentProps) {
         }),
       }
     );
+    setIsEditing(false);
     setRerender((prev) => !prev);
   }
 

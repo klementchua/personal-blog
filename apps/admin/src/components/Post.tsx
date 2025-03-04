@@ -118,7 +118,7 @@ function Post() {
           </p>
           <hr />
           {!isEditing ? (
-            <p>{post?.content}</p>
+            <div dangerouslySetInnerHTML={{ __html: postContent }}></div>
           ) : (
             <div>
               <form onSubmit={handleEdit}>
