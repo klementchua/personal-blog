@@ -1,3 +1,5 @@
+import { useAuth } from '../context/AuthProvider';
+
 export type CommentType = {
   id: number;
   content: string;
@@ -11,9 +13,17 @@ export type CommentType = {
 };
 
 function Comment({ comment }: { comment: CommentType }) {
+  const { user } = useAuth();
+  const canManageComment = comment.user.username === user?.username;
+
   return (
     <div className="comment">
       {comment.user.username}: {comment.content}
+      {canManageComment && (
+        <div>
+          <button>Delete</button>
+        </div>
+      )}
     </div>
   );
 }
