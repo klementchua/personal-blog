@@ -75,6 +75,17 @@ async function publishPost(id) {
     },
   });
 }
+async function unpublishPost(id) {
+  await prisma.post.update({
+    where: {
+      id,
+    },
+    data: {
+      isPublished: false,
+      datePublished: new Date(),
+    },
+  });
+}
 
 // Comments
 async function getAllComments(postId) {
@@ -143,6 +154,7 @@ module.exports = {
   updatePost,
   deletePost,
   publishPost,
+  unpublishPost,
   getAllComments,
   getCommentById,
   addComment,

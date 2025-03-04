@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Comment, { CommentType } from './Comment';
 import { useParams } from 'react-router-dom';
 import NewComment from './NewComment';
+import Header from './Header';
 
 function CommentsContainer() {
   const [comments, setComments] = useState<CommentType[]>([]);
@@ -28,22 +29,25 @@ function CommentsContainer() {
   }, [postId, rerender]);
 
   return (
-    <div className="comments-container">
-      <NewComment setRerender={setRerender} />
-      {commentsIsLoading ? (
-        <div>Loading comments...</div>
-      ) : (
-        comments.map((comment) => {
-          return (
-            <Comment
-              comment={comment}
-              setRerender={setRerender}
-              key={comment.id}
-            />
-          );
-        })
-      )}
-    </div>
+    <>
+      <Header />
+      <div className="comments-container">
+        <NewComment setRerender={setRerender} />
+        {commentsIsLoading ? (
+          <div>Loading comments...</div>
+        ) : (
+          comments.map((comment) => {
+            return (
+              <Comment
+                comment={comment}
+                setRerender={setRerender}
+                key={comment.id}
+              />
+            );
+          })
+        )}
+      </div>
+    </>
   );
 }
 

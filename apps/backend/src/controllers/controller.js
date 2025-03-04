@@ -49,6 +49,11 @@ async function publishPost(req, res) {
   await db.publishPost(parseInt(id));
   res.end();
 }
+async function unpublishPost(req, res) {
+  const { id } = req.params;
+  await db.unpublishPost(parseInt(id));
+  res.end();
+}
 
 // Comment functions
 async function getAllComments(req, res) {
@@ -100,6 +105,7 @@ module.exports = {
   updatePost,
   deletePost,
   publishPost,
+  unpublishPost,
   getAllComments,
   getComment,
   addComment,

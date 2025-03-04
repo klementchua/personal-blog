@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import type { PostType } from './Post';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../hooks/AuthProvider';
 
 function ManagePosts() {
   const [posts, setPosts] = useState<PostType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const { isAuthenticated } = useAuth();
 
   useEffect(() => {
     async function getPosts() {
@@ -21,6 +23,16 @@ function ManagePosts() {
     getPosts();
   }, []);
 
+  if (!isAuthenticated) {
+    return (
+      <div>
+        You are not allowed to access this page.
+        <br />
+        <Link to="/">Home</Link>
+      </div>
+    );
+  }
+
   return isLoading ? (
     <p>Loading...</p>
   ) : (
@@ -34,6 +46,7 @@ function ManagePosts() {
             <button>Open Comments</button>
           </Link>
           <div>{post.isPublished ? 'Published' : 'Unpublished'}</div>
+          <hr />
         </div>
       );
     })

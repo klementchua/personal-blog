@@ -34,11 +34,17 @@ router.delete(
   authController.isAdmin,
   controller.deletePost
 );
-router.post(
+router.put(
   '/posts/:id/publish',
   passport.authenticate('jwt', { session: false }),
   authController.isAdmin,
   controller.publishPost
+);
+router.put(
+  '/posts/:id/unpublish',
+  passport.authenticate('jwt', { session: false }),
+  authController.isAdmin,
+  controller.unpublishPost
 );
 
 // For post comments
