@@ -25,7 +25,8 @@ function Comment({ comment, setRerender }: CommentProps) {
 
   const { token, user, checkTokenExpiry } = useAuth();
   const navigate = useNavigate();
-  const canManageComment = comment.user.username === user?.username;
+  const canManageComment =
+    comment.user.username === user?.username || user?.role === 'ADMIN';
 
   async function deleteHandler() {
     const tokenExpired = checkTokenExpiry();

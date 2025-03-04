@@ -23,9 +23,8 @@ function Comment({ comment, setRerender }: CommentProps) {
   const [commentContent, setCommentContent] = useState(comment.content);
   const [isEditing, setIsEditing] = useState(false);
 
-  const { token, user, checkTokenExpiry } = useAuth();
+  const { token, checkTokenExpiry } = useAuth();
   const navigate = useNavigate();
-  const canManageComment = comment.user.username === user?.username;
 
   async function deleteHandler() {
     const tokenExpired = checkTokenExpiry();
@@ -80,12 +79,10 @@ function Comment({ comment, setRerender }: CommentProps) {
           <button type="submit">Submit</button>
         </form>
       )}
-      {canManageComment && (
-        <div>
-          <button onClick={deleteHandler}>Delete</button>
-          <button onClick={() => setIsEditing((prev) => !prev)}>Edit</button>
-        </div>
-      )}
+      <div>
+        <button onClick={deleteHandler}>Delete</button>
+        <button onClick={() => setIsEditing((prev) => !prev)}>Edit</button>
+      </div>
     </div>
   );
 }
