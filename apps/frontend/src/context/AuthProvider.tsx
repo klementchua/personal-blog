@@ -1,4 +1,5 @@
 import { createContext, useState, useContext } from 'react';
+import { jwtDecode } from 'jwt-decode';
 
 type User = {
   id: number;
@@ -15,6 +16,7 @@ type ContextValue = {
     password: string;
   }) => Promise<boolean>;
   logout: () => void;
+  checkTokenExpiry: () => boolean | undefined;
 };
 
 const AuthContext = createContext<ContextValue>({
@@ -23,6 +25,7 @@ const AuthContext = createContext<ContextValue>({
   isAuthenticated: false,
   login: async () => false,
   logout: () => {},
+  checkTokenExpiry: () => false,
 });
 
 export const useAuth = () => {
@@ -70,7 +73,25 @@ export function AuthProvider({ children }) {
     setIsAuthenticated(false);
   }
 
-  const authContextValue = { token, isAuthenticated, user, login, logout };
+  function checkTokenExpiry() {
+    if (!token) return;
+
+    const decoded = jwtDecode(token);
+    if (!decoded.exp || decoded.exp * 1000 < Date.now()) {
+      logout();
+      return true;
+    }
+    return false;
+  }
+
+  const authContextValue = {
+    token,
+    isAuthenticated,
+    user,
+    login,
+    logout,
+    checkTokenExpiry,
+  };
 
   return (
     <AuthContext.Provider value={authContextValue}>
