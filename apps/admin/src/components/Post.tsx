@@ -63,6 +63,17 @@ function Post() {
     setRerender((prev) => !prev);
   }
 
+  async function handleDelete() {
+    const tokenExpired = checkTokenExpiry();
+    if (tokenExpired) return navigate('/');
+
+    await fetch(`${import.meta.env.VITE_API_HOST}/posts/${postId}`, {
+      method: 'DELETE',
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    navigate('/');
+  }
+
   if (!isAuthenticated) {
     return (
       <div>
@@ -93,6 +104,7 @@ function Post() {
         <button onClick={handlePublish}>
           {post?.isPublished ? 'Unpublish' : 'Publish'}
         </button>
+        <button onClick={handleDelete}>Delete</button>
       </div>
     </>
   );
