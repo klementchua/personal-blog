@@ -16,6 +16,8 @@ export type PostType = {
 
 function Post() {
   const [post, setPost] = useState<PostType>();
+  const [postContent, setPostContent] = useState<string>('');
+  const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [rerender, setRerender] = useState(false);
   const { postId } = useParams() as { postId: string };
@@ -32,6 +34,7 @@ function Post() {
           }
         ).then((response) => response.json());
         setPost(json);
+        setPostContent(json.content);
         setIsLoading(false);
       } catch (err) {
         console.log(err);
@@ -74,6 +77,24 @@ function Post() {
     navigate('/');
   }
 
+  async function handleEdit() {
+    const tokenExpired = checkTokenExpiry();
+    if (tokenExpired) return navigate('/');
+
+    await fetch(`${import.meta.env.VITE_API_HOST}/posts/${postId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        content: postContent,
+      }),
+    });
+    setIsEditing(false);
+    setRerender((prev) => !prev);
+  }
+
   if (!isAuthenticated) {
     return (
       <div>
@@ -96,7 +117,19 @@ function Post() {
             Published on {datePublished}, last updated on {dateUpdated}
           </p>
           <hr />
-          <p>{post?.content}</p>
+          {!isEditing ? (
+            <p>{post?.content}</p>
+          ) : (
+            <div>
+              <form onSubmit={handleEdit}>
+                <textarea
+                  value={postContent}
+                  onChange={(e) => setPostContent(e.target.value)}
+                ></textarea>
+                <button type="submit">Submit</button>
+              </form>
+            </div>
+          )}
           <hr />
         </div>
       </div>
@@ -105,6 +138,7 @@ function Post() {
           {post?.isPublished ? 'Unpublish' : 'Publish'}
         </button>
         <button onClick={handleDelete}>Delete</button>
+        <button onClick={() => setIsEditing((prev) => !prev)}>Edit</button>
       </div>
     </>
   );
