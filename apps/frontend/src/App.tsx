@@ -1,14 +1,13 @@
-import './App.css';
-import PostContainer from './components/PostContainer';
-import Header from './components/Header';
+import Header from './components/Header/Header';
+import { Outlet } from 'react-router-dom';
 
 function App() {
   return (
     <>
       <Header />
-      <h1>My Personal Blog</h1>
-      <hr />
-      <PostContainer />
+      <main>
+        <Outlet />
+      </main>
     </>
   );
 }

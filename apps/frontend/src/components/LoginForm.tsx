@@ -1,7 +1,6 @@
 import { SyntheticEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/AuthProvider';
-import Header from './Header';
 
 function LoginForm() {
   const [username, setUsername] = useState<string>('');
@@ -27,7 +26,6 @@ function LoginForm() {
 
   return (
     <>
-      <Header />
       <div>
         <form onSubmit={submitHandler}>
           <div>

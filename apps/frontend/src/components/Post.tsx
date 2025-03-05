@@ -1,9 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import CommentsContainer from './CommentsContainer';
-import { useAuth } from '../hooks/AuthProvider';
-import { Link } from 'react-router-dom';
-import Header from './Header';
 
 export type PostType = {
   id: number;
@@ -51,7 +48,6 @@ function Post() {
     <div>Loading...</div>
   ) : (
     <>
-      <Header />
       <div className="blog-post">
         <div className="post-container">
           <h1>{post?.title}</h1>

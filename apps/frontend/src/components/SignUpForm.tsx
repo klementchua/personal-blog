@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import Header from './Header';
 import { useNavigate } from 'react-router-dom';
 
 const defaultFormState = {
@@ -34,7 +33,6 @@ function SignUpForm() {
 
   return (
     <>
-      <Header />
       <div>
         <form onSubmit={submitHandler}>
           <div>
