@@ -36,20 +36,27 @@ function ManagePosts() {
   return isLoading ? (
     <p>Loading...</p>
   ) : (
-    posts.map((post) => {
-      return (
-        <div key={post.id}>
-          <Link to={`posts/${post.id}`}>
-            <h2>{post.title}</h2>
-          </Link>
-          <Link to={`posts/${post.id}/comments`}>
-            <button>Open Comments</button>
-          </Link>
-          <div>{post.isPublished ? 'Published' : 'Unpublished'}</div>
-          <hr />
-        </div>
-      );
-    })
+    <>
+      <div>
+        {posts.map((post) => {
+          return (
+            <div key={post.id}>
+              <Link to={`posts/${post.id}`}>
+                <h2>{post.title}</h2>
+              </Link>
+              <Link to={`posts/${post.id}/comments`}>
+                <button>Open Comments</button>
+              </Link>
+              <div>{post.isPublished ? 'Published' : 'Unpublished'}</div>
+              <hr />
+            </div>
+          );
+        })}
+      </div>
+      <button>
+        <Link to="/new-post">Create New Post</Link>
+      </button>
+    </>
   );
 }
 

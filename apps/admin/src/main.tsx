@@ -7,6 +7,7 @@ import App from './App.tsx';
 import LoginForm from './components/LoginForm.tsx';
 import Post from './components/Post.tsx';
 import CommentsContainer from './components/CommentsContainer.tsx';
+import NewPost from './components/NewPost.tsx';
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
   {
     path: '/posts/:postId/comments',
     element: <CommentsContainer />,
+  },
+  {
+    path: '/new-post',
+    element: <NewPost />,
   },
 ]);
 
