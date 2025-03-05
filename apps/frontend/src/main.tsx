@@ -5,7 +5,7 @@ import { AuthProvider } from './hooks/AuthProvider.tsx';
 import './index.css';
 import App from './App.tsx';
 import PostContainer from './components/PostContainer/PostContainer.tsx';
-import Post from './components/Post.tsx';
+import Post from './components/Post/Post.tsx';
 import LoginForm from './components/LoginForm.tsx';
 import SignUpForm from './components/SignUpForm.tsx';
 

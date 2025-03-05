@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import type { PostType } from '../Post';
+import type { PostType } from '../Post/Post';
 import { Link } from 'react-router-dom';
 import ArrowSVG from '../ArrowSVG';
 import styles from './PostContainer.module.css';

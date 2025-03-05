@@ -1,0 +1,39 @@
+.loading {
+  display: flex;
+  justify-content: center;
+}
+
+.postContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20%;
+}
+
+.postContainer > h1 {
+  font-size: 2.5rem;
+  margin-bottom: -0.1rem;
+}
+.postDates {
+  color: rgb(166, 166, 166);
+}
+.postDates > span {
+  color: #242424;
+}
+.postContent {
+  padding-top: 1.2rem;
+  align-self: flex-start;
+  font-size: 1.3rem;
+}
+
+.hr {
+  margin: auto;
+  height: 1px;
+  width: 90%;
+  background-color: #e0dfd4;
+  border-radius: 50%;
+}
+
+.commentsContainer {
+  padding: 40px 20%;
+}

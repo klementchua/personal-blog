@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import CommentsContainer from './CommentsContainer';
+import CommentsContainer from '../CommentsContainer';
+import styles from './Post.module.css';
 
 export type PostType = {
   id: number;
@@ -45,22 +46,27 @@ function Post() {
     : 'unpublished';
 
   return isLoading ? (
-    <div>Loading...</div>
+    <div className={styles.loading}>
+      <h1>Loading...</h1>
+    </div>
   ) : (
-    <>
-      <div className="blog-post">
-        <div className="post-container">
-          <h1>{post?.title}</h1>
-          <p>
-            Published on {datePublished}, last updated on {dateUpdated}
-          </p>
-          <hr />
-          <div dangerouslySetInnerHTML={{ __html: postContent }}></div>
-          <hr />
-        </div>
+    <div>
+      <div className={styles.postContainer}>
+        <h1>{post?.title}</h1>
+        <p className={styles.postDates}>
+          published on <span>{datePublished}</span>, last updated on{' '}
+          <span>{dateUpdated}</span>.
+        </p>
+        <div
+          className={styles.postContent}
+          dangerouslySetInnerHTML={{ __html: postContent }}
+        ></div>
+      </div>
+      <div className={styles.hr} />
+      <div className={styles.commentsContainer}>
         <CommentsContainer />
       </div>
-    </>
+    </div>
   );
 }
 
