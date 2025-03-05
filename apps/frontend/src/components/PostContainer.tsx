@@ -12,7 +12,10 @@ function PostContainer() {
         const json = await fetch(`${import.meta.env.VITE_API_HOST}/posts`, {
           mode: 'cors',
         }).then((response) => response.json());
-        setPosts(json);
+        const publishedPosts = json.filter(
+          (post: PostType) => post.isPublished
+        );
+        setPosts(publishedPosts);
         setIsLoading(false);
       } catch (err) {
         console.log(err);
