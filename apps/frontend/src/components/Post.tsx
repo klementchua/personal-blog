@@ -20,7 +20,6 @@ function Post() {
   const [postContent, setPostContent] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const { postId } = useParams() as { postId: string };
-  const { isAuthenticated } = useAuth();
 
   useEffect(() => {
     async function getPost(postId: number) {
@@ -47,16 +46,6 @@ function Post() {
   const dateUpdated = post?.dateUpdated
     ? post.dateUpdated.slice(0, 10).split('-').reverse().join('/')
     : 'unpublished';
-
-  if (!isAuthenticated) {
-    return (
-      <div>
-        You are not allowed to access this page.
-        <br />
-        <Link to="/">Home</Link>
-      </div>
-    );
-  }
 
   return isLoading ? (
     <div>Loading...</div>
