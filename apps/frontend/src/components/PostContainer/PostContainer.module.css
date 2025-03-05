@@ -1,0 +1,29 @@
+.loading {
+  display: flex;
+  justify-content: center;
+}
+
+.postContainer {
+  padding: 40px 5%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.postContainer > a {
+  align-self: flex-start;
+  color: #242424;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  height: 40px;
+  transition: all 0.1s ease-in-out;
+}
+.postContainer > a > svg {
+  margin-left: 5px;
+  width: 30px;
+}
+.postContainer > a:hover {
+  background-color: antiquewhite;
+  border-radius: 10px;
+}

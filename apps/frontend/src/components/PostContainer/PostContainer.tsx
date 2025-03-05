@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
-import type { PostType } from './Post';
+import type { PostType } from '../Post';
 import { Link } from 'react-router-dom';
+import ArrowSVG from '../ArrowSVG';
+import styles from './PostContainer.module.css';
 
 function PostContainer() {
   const [posts, setPosts] = useState<PostType[]>([]);
@@ -25,15 +27,20 @@ function PostContainer() {
   }, []);
 
   return isLoading ? (
-    <p>Loading...</p>
+    <div className={styles.loading}>
+      <h1>Loading...</h1>
+    </div>
   ) : (
-    posts.map((post) => {
-      return (
-        <Link key={post.id} to={`posts/${post.id}`}>
-          <h2>{post.title}</h2>
-        </Link>
-      );
-    })
+    <div className={styles.postContainer}>
+      {posts.map((post) => {
+        return (
+          <Link key={post.id} to={`posts/${post.id}`}>
+            <h2>{post.title}</h2>
+            <ArrowSVG />
+          </Link>
+        );
+      })}
+    </div>
   );
 }
 
